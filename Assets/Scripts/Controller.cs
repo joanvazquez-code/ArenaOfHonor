@@ -19,7 +19,7 @@ public class Controller : MonoBehaviour
     [SerializeField] float jumpHeight = 3f;
     [SerializeField] int maxJumps = 1;
 
-    [Header("Raton camara")]
+    [Header("Raton / Cámara")]
     [Range(0.1f, 100f)]
     [SerializeField] float mouseSensitivity = 100f;
     [SerializeField] float horizontalSpeed = 1f;
@@ -27,7 +27,7 @@ public class Controller : MonoBehaviour
     [SerializeField] float xMinLimit = -80f;
     [SerializeField] float xMaxLimit = 80f;
 
-    [Header("Fisicas")]
+    [Header("Físicas")]
     [SerializeField] float gravity = -9.81f;
     [SerializeField] Transform groundCheck;
     [SerializeField] Transform roofCheck;
