@@ -19,4 +19,5 @@ public class CambioDeScenas : MonoBehaviour
         // Carga la escena del juego principal.
         UnityEngine.SceneManagement.SceneManager.LoadScene("ComoJugar");
     }
+    
 }
