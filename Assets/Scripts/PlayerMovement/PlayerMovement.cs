@@ -117,6 +117,14 @@ public class PlayerMovement : MonoBehaviour
         if (vidaActual <= 0)
             Morir();
     }
+    public bool tieneArma = false;
+
+    public void PickupWeapon()
+    {
+        tieneArma = true;
+        Debug.Log("¡Arma recogida!");
+        // Aquí puedes mostrar el arma en pantalla, habilitar su modelo, activar UI, etc.
+    }
 
     void Morir()
     {
