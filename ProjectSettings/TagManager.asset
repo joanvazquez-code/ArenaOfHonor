@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BarraDeVIda
   - enemigo
+  - arma
   layers:
   - Default
   - TransparentFX

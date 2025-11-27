@@ -1,18 +1,61 @@
 using UnityEngine;
 
-public class Arma : MonoBehaviour
+public class ArmaRecogible : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    public float distanciaRecogida = 3f;
+    private GameObject jugador;
+    private PlayerMovement playerScript;
+
+    void Start()
     {
-        // Revisa si el objeto que entra en el trigger es el jugador (tag Player)
-        if (other.CompareTag("Player"))
+        jugador = GameObject.FindGameObjectWithTag("Player");
+        if (jugador != null)
         {
-            PlayerMovement playerScript = other.GetComponent<PlayerMovement>();
-            if (playerScript != null)
+            playerScript = jugador.GetComponent<PlayerMovement>();
+            Debug.Log($"🎯 Jugador encontrado: {jugador.name}");
+            
+            // Verificar si el punto de sujeción está asignado
+            if (playerScript.puntoSujecionArma == null)
             {
-                playerScript.PickupWeapon(); // Método del jugador que puedes personalizar
-                Destroy(gameObject); // Elimina la arma física de la escena
+                Debug.LogError("❌ PUNTO SUJECIÓN NO ASIGNADO en el jugador");
+            }
+            else
+            {
+                Debug.Log($"✅ Punto sujeción: {playerScript.puntoSujecionArma.name}");
             }
         }
+    }
+
+    void Update()
+    {
+        if (jugador == null || playerScript == null) return;
+
+        float distancia = Vector3.Distance(transform.position, jugador.transform.position);
+        
+        // Debug de distancia
+        if (Time.frameCount % 60 == 0)
+        {
+            Debug.Log($"📏 Distancia a {gameObject.name}: {distancia:F1}");
+        }
+        
+        if (distancia <= distanciaRecogida && Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log($"🔼 E presionada - Intentando recoger {gameObject.name}");
+            
+            if (!playerScript.tieneArma)
+            {
+                RecogerArma();
+            }
+            else
+            {
+                Debug.Log("❌ Jugador ya tiene arma");
+            }
+        }
+    }
+
+    void RecogerArma()
+    {
+        Debug.Log($"🎯 Recogiendo {gameObject.name}...");
+        playerScript.RecogerArma(this.gameObject);
     }
 }
