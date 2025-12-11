@@ -16,29 +16,30 @@ public class RecogerEspada : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-      
-        if (other.CompareTag("Player"))
+        if (puedeRecoger)
         {
-            Debug.Log("🎯 Jugador en zona de recogida de espada");
-            if(Input.GetKeyDown(KeyCode.E) && puedeRecoger)
+             if(Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("🎯 Recogiendo espada...");
-                PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
+                PlayerMovement playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
                 Debug.Log("✅ PlayerMovement encontrado en el jugador");
                 if (playerMovement != null)
                 {
                     playerMovement.tieneArma = true;
+                     Destroy(espada); // Destruye la espada del suelo
                     puedeRecoger = false;
-                    Destroy(espada); // Destruye la espada del suelo
+                   
     
                 }
             }
-            
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            puedeRecoger = true;
         }
     }
 }
