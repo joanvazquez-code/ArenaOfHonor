@@ -3780,10 +3780,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::enemigo
   player: {fileID: 74823353}
   detectionRange: 20
-  attackRange: 2
+  attackRange: 3
   damagePerSecond: 10
   vidaMax: 30
-  vidaActual: 0
+  vidaActual: 30
 --- !u!136 &1171406324
 CapsuleCollider:
   m_ObjectHideFlags: 0
