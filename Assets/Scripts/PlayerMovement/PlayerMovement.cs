@@ -82,9 +82,15 @@ public class PlayerMovement : MonoBehaviour
 
         HandleMovement();
         HandleMouseLook();
-        if(tieneArma)
+
+        if (tieneArma)
             espada.SetActive(true);
-        
+
+        // === ATAQUE AL ENEMIGO (clic izquierdo) ===
+        if (Input.GetMouseButtonDown(0))
+        {
+            Atacar();
+        }
     }
 
     void HandleMovement()
@@ -163,40 +169,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void RecogerArma(GameObject arma)
     {
-        //if (tieneArma) return;
-
-        /*Debug.Log("🎯 Posicionando arma...");
-
-        tieneArma = true;
-
-        // 1. ELIMINAR FÍSICA inmediatamente
-        Rigidbody rb = arma.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            DestroyImmediate(rb);
-            Debug.Log("✅ Rigidbody eliminado");
-        }
-
-        Collider collider = arma.GetComponent<Collider>();
-        if (collider != null)
-        {
-            DestroyImmediate(collider);
-            Debug.Log("✅ Collider eliminado");
-        }
-
-        // 2. HACER HIJO de la mano
-        arma.transform.SetParent(puntoSujecionArma);
-
-        // 3. POSICIONAR EXACTAMENTE
-        arma.transform.localPosition = Vector3.zero;
-        arma.transform.localRotation = Quaternion.identity;
-        arma.transform.localScale = Vector3.one;
-
-        // 4. DEBUG para verificar
-        Debug.Log($"📍 ¿Arma activa? {arma.activeInHierarchy}");
-        Debug.Log($"📍 ¿Tiene parent? {arma.transform.parent != null}");
-        Debug.Log($"📍 Parent: {arma.transform.parent?.name}");
-        Debug.Log("✅ Arma debería estar en la mano");*/
+        // Aquí puedes meter la lógica de poner el arma en la mano si quieres
     }
 
     void Morir()
@@ -223,7 +196,6 @@ public class PlayerMovement : MonoBehaviour
 
     void CambiarAMenu()
     {
-        // Cargar el menú principal
         SceneManager.LoadScene("Menu");
     }
 
@@ -232,5 +204,23 @@ public class PlayerMovement : MonoBehaviour
     {
         ReiniciarEstado();
         SceneManager.LoadScene("Partida");
+    }
+
+    // ===== ATAQUE DEL JUGADOR AL ENEMIGO =====
+    void Atacar()
+    {
+        if (!tieneArma) return;
+
+        Ray ray = new Ray(playerCamera.position, playerCamera.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 2f))
+        {
+            enemigo enemy = hit.collider.GetComponent<enemigo>();
+            if (enemy != null)
+            {
+                enemy.RecibirDaño(10); // quita 10 de vida por golpe
+            }
+        }
     }
 }
